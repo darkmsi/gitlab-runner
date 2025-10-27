@@ -28,8 +28,9 @@ jobs:
           # Extract repo name from GITHUB_REPOSITORY variable
           repo="${{ github.repository }}"
           artifact="${repo##*/}"
-          version0="${{ github.event.inputs.version != '' && github.event.inputs.version || github.ref }}"
-          version="${version0##v}"
+          version="${{ github.event.inputs.version != '' && github.event.inputs.version || github.ref }}"
+          version="${version##*/}"
+          version="${version##v}"
           tag="v${version}"
           echo "artifact: ${artifact}"
           echo "version: ${version}"
