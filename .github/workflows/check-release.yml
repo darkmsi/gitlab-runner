@@ -5,6 +5,14 @@ on:
       repo:
         description: Repository
         required: false
+      domain:
+        description: Git service domain
+        default: github.com
+        required: false
+      scheme:
+        description: Git service scheme
+        default: https
+        required: false
 jobs:
   release_version:
     runs-on: ubuntu-latest
@@ -15,7 +23,10 @@ jobs:
         uses: ./.github/actions/get-release
         with:
           repo: ${{ github.event.inputs.repo }}
+          scheme: ${{ github.event.inputs.scheme }}
+          domain: ${{ github.event.inputs.domain }}
       - name: Result
         run: |
-          echo "id: ${{ github.getter.outputs.id }}"
-          echo "tag_name: ${{ github.getter.outputs.tag_name }}"
+          echo "id: ${{ steps.getter.outputs.id }}"
+          echo "tag: ${{ steps.getter.outputs.tag }}"
+          echo "name: ${{ steps.getter.outputs.name }}"
