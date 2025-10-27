@@ -17,4 +17,5 @@ jobs:
           repo: ${{ github.event.inputs.repo }}
       - name: Result
         run: |
-          echo "release_id: ${{ env.release_id }}"
+          echo "id: ${{ github.getter.outputs.id }}"
+          echo "tag_name: ${{ github.getter.outputs.tag_name }}"
