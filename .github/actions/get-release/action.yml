@@ -43,7 +43,7 @@ runs:
   steps:
     - name: Get github repo info
       shell: bash
-      if: inputs.domain == github.com || inputs.domain == api.github.com
+      if: inputs.domain == 'github.com' || inputs.domain == 'api.github.com'
       run: |
         repo="${{ inputs.repo || github.repository }}"
         url="https://api.github.com/repos/$repo/releases/latest"
@@ -63,7 +63,7 @@ runs:
 
     - name: Get gitlab repo info
       shell: bash
-      if: inputs.domain != github.com && inputs.domain != api.github.com && inputs.repo
+      if: inputs.domain != 'github.com' && inputs.domain != 'api.github.com' && inputs.repo
       run: |
         repo="${{ inputs.repo }}"
         url="https://api.github.com/repos/$repo/releases/latest"
