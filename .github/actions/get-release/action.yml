@@ -37,10 +37,15 @@ runs:
 #      if: inputs.repo != github.repository
       shell: bash
       run: |
+        echo "inputs.repo=${{ inputs.repo }}"
+        echo "inputs.repo2=${{ inputs.repo || github.repository }}"
+        echo "inputs.repo3=${{ inputs.repo || inputs.repo != '' && github.repository || '' }}"
         result=`curl -sL --no-progress-bar \
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer ${{ inputs.token }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/repos/${{ inputs.repo }}/releases/latest" | jq .id`
+            "https://api.github.com/repos/${{ inputs.repo || github.repository }}/releases/latest"`
+        echo "result=${result}"
+        result=`echo "${result}" | jq .id`
         test -z "${result}" || echo "${{ inputs.saveto }}=${result}" >> $GITHUB_ENV
         echo "${{ inputs.saveto }}=${result}"
