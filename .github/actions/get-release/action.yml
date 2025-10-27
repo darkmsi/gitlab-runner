@@ -21,22 +21,31 @@ inputs:
 outputs:
   id:
     description: Id of the release
+    value: ${{ jobs.gl-info.outputs.id || jobs.gh-info.outputs.id }}
   name:
     description: Name of the release
+    value: ${{ jobs.gl-info.outputs.name || jobs.gh-info.outputs.name }}
   tag:
     description: Tag of the release
+    value: ${{ jobs.gl-info.outputs.tag || jobs.gh-info.outputs.tag }}
   created_at:
     description: Creation date of the release
+    value: ${{ jobs.gl-info.outputs.created_at || jobs.gh-info.outputs.created_at }}
   draft:
     description: Release is draft
+    value: ${{ jobs.gl-info.outputs.draft || jobs.gh-info.outputs.draft }}
   prerelease:
     description: Release is prerelease
+    value: ${{ jobs.gl-info.outputs.prerelease || jobs.gh-info.outputs.prerelease }}
   release:
     description: Release is production release
+    value: ${{ jobs.gl-info.outputs.release || jobs.gh-info.outputs.release }}
   url:
     description: API URL to release
+    value: ${{ jobs.gl-info.outputs.url || jobs.gh-info.outputs.url }}
   html_url:
     description: HTML URL to release
+    value: ${{ jobs.gl-info.outputs.html_url || jobs.gh-info.outputs.html_url }}
 
 runs:
   using: composite
