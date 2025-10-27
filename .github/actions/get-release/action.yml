@@ -50,10 +50,9 @@ outputs:
 runs:
   using: composite
   steps:
-    - shell: bash
-# name: Get github repo info
-#      id: gh-info
-#      shell: bash
+    - name: Get github repo info
+      id: gh-info
+      shell: bash
 #      if: inputs.domain == 'github.com' || inputs.domain == 'api.github.com'
       run: |
         repo="${{ inputs.repo || github.repository }}"
