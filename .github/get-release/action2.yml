@@ -1,0 +1,27 @@
+description: Get repository last release
+
+inputs:
+  repo:
+    description: Repository
+    default: ${{ github.repository }}
+    required: false
+  token:
+    description: Auth token
+    default: ${{ github.token }}
+    required: false
+  saveto:
+    description: Var name to save to
+    default: release_id
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        result=`curl -sL --no-progress-bar \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ inputs.token }}" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${{ inputs.repo }}/releases/latest" | jq .id`
+        test -z "${result}" || echo "${{ inputs.saveto }}=${result}" >> $GITHUB_ENV

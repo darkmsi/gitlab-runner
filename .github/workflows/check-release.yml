@@ -1,0 +1,20 @@
+name: Check release
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: Repository
+        required: false
+jobs:
+  release_version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: getter
+        id: getter
+        uses: ./.github/actions/get-release
+        with:
+          repo: ${{ github.event.inputs.repo }}
+      - name: Result
+        run: |
+          echo "release_id: ${{ env.release_id }}"
