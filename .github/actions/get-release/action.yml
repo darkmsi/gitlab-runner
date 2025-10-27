@@ -42,6 +42,7 @@ runs:
   using: composite
   steps:
     - name: Get github repo info
+      id: gh-info
       shell: bash
       if: inputs.domain == 'github.com' || inputs.domain == 'api.github.com'
       run: |
@@ -53,15 +54,16 @@ runs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
             "$url"`
         for i in id name created_at draft prerelease url html_url; do
-          echo -n "$i=" >> "$GITHUB_OUTPUT"
-          echo "$result" | jq ".$i"' // ""' >> "$GITHUB_OUTPUT"
+          echo -n "$i=" >> $GITHUB_OUTPUT
+          echo "$result" | jq ".$i"' // ""' >> $GITHUB_OUTPUT
           echo -n "$i="
           echo "$result" | jq ".$i"' // ""'
         done
-        echo -n "tag=" >> "$GITHUB_OUTPUT"
-        echo "$result" | jq ".tag_name"' // ""' >> "$GITHUB_OUTPUT"
+        echo -n "tag=" >> $GITHUB_OUTPUT
+        echo "$result" | jq ".tag_name"' // ""' >> $GITHUB_OUTPUT
 
     - name: Get gitlab repo info
+      id: gl-info
       shell: bash
       if: inputs.domain != 'github.com' && inputs.domain != 'api.github.com' && inputs.repo
       run: |
@@ -76,8 +78,8 @@ runs:
         result=`curl --compressed -sL --no-progress-bar \
           -H "Accept: application/vnd.github+json" $auth_header "$url"`
         for i in id name tag created_at; do
-          echo -n "$i=" >> "$GITHUB_OUTPUT"
-          echo "$result" | jq ".$i"' // ""' >> "$GITHUB_OUTPUT"
+          echo -n "$i=" >> $GITHUB_OUTPUT
+          echo "$result" | jq ".$i"' // ""' >> $GITHUB_OUTPUT
           echo -n "$i="
           echo "$result" | jq ".$i"' // ""'
         done
