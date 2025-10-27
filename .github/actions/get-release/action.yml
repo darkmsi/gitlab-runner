@@ -17,24 +17,24 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Get self repo info
-      id: self
-      if: inputs.repo == github.repository
-      uses: InsonusK/get-latest-release@v1.0.1
-      with:
-        myToken: ${{ inputs.token }}
-        exclude_types: release
-        view_top: 1
-
-    - name: Print result
-      if: inputs.repo == github.repository
-      shell: bash
-      run: |
-        test -z "${{ steps.self.outputs.id }}" || echo "${{ inputs.saveto }}=${{ steps.self.outputs.id }}" >> $GITHUB_ENV
-        echo "${{ inputs.saveto }}=${{ steps.self.outputs.id }}"
+#    - name: Get self repo info
+#      id: self
+#      if: inputs.repo == github.repository
+#      uses: InsonusK/get-latest-release@v1.0.1
+#      with:
+#        myToken: ${{ inputs.token }}
+#        exclude_types: release
+#        view_top: 1
+#
+#    - name: Print result
+#      if: inputs.repo == github.repository
+#      shell: bash
+#      run: |
+#        test -z "${{ steps.self.outputs.id }}" || echo "${{ inputs.saveto }}=${{ steps.self.outputs.id }}" >> $GITHUB_ENV
+#        echo "${{ inputs.saveto }}=${{ steps.self.outputs.id }}"
 
     - name: Get external repo info
-      if: inputs.repo != github.repository
+#      if: inputs.repo != github.repository
       shell: bash
       run: |
         result=`curl -sL --no-progress-bar \
