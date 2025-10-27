@@ -61,6 +61,8 @@ runs:
         done
         echo -n "tag=" >> $GITHUB_OUTPUT
         echo "$result" | jq ".tag_name"' // ""' >> $GITHUB_OUTPUT
+        echo "suka=suka" >> $GITHUB_OUTPUT
+        echo "suka2=suka2" >> "$GITHUB_OUTPUT"
 
     - name: Get gitlab repo info
       id: gl-info
@@ -83,3 +85,5 @@ runs:
           echo -n "$i="
           echo "$result" | jq ".$i"' // ""'
         done
+        echo "puka=suka" >> $GITHUB_OUTPUT
+        echo "puka2=suka2" >> "$GITHUB_OUTPUT"
