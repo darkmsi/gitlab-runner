@@ -66,13 +66,13 @@ runs:
       if: inputs.domain != 'github.com' && inputs.domain != 'api.github.com' && inputs.repo
       run: |
         repo="${{ inputs.repo }}"
-        url="https://api.github.com/repos/$repo/releases/latest"
         site="${{ inputs.scheme }}://${{ inputs.domain }}"
         url="$site/$repo/-/releases?format=json"
         token="${{ inputs.token != github.token && inputs.token || '' }}"
         if test -n "$token"; then
           auth_header="-H 'Authorization: Bearer $token'"
         fi
+        echo "curl --compressed -sL --no-progress-bar -H 'Accept: application/vnd.github+json' $auth_header '$url'"
         result=`curl --compressed -sL --no-progress-bar \
           -H "Accept: application/vnd.github+json" $auth_header "$url"`
         for i in id name tag created_at; do

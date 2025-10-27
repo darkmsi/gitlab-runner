@@ -14,7 +14,7 @@ on:
         default: https
         required: false
 jobs:
-  release_version:
+  release_info:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
