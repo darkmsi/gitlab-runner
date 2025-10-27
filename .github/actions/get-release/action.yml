@@ -55,12 +55,16 @@ runs:
             "$url"`
         for i in id name created_at draft prerelease url html_url; do
           echo -n "$i=" >> $GITHUB_OUTPUT
-          echo "$result" | jq ".$i"' // ""' >> $GITHUB_OUTPUT
+          echo "$result" | jq ".$i // \"\"" >> $GITHUB_OUTPUT
           echo -n "$i="
-          echo "$result" | jq ".$i"' // ""'
+          echo "$result" | jq ".$i // \"\""
         done
         echo -n "tag=" >> $GITHUB_OUTPUT
-        echo "$result" | jq ".tag_name"' // ""' >> $GITHUB_OUTPUT
+        echo "$result" | jq ".tag_name // \"\"" >> $GITHUB_OUTPUT
+
+        echo -n "tag="
+        echo "$result" | jq ".tag_name"' // ""'
+
         echo "suka=suka" >> $GITHUB_OUTPUT
         echo "suka2=suka2" >> "$GITHUB_OUTPUT"
 
