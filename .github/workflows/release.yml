@@ -1,0 +1,55 @@
+name: Create and publish release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Release version
+        required: true
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Get vars
+        id: get_vars
+        run: |
+          # Extract repo name from GITHUB_REPOSITORY variable
+          repo_fullname="${{ github.repository }}"
+          artifact="${repo_fullname##*/}"
+          version="${{ github.event.inputs.version }}"
+          echo "version=${version}" >> $GITHUB_ENV
+          echo "artifact=${artifact}" >> $GITHUB_ENV
+          echo "file=${artifact}.msi" >> $GITHUB_ENV
+          echo "full=${artifact}-${version}.msi" >> $GITHUB_ENV
+
+      - name: Create Release
+        run: |
+          echo "File: ${{ env.file }}"
+          echo "Full: ${{ env.full }}"
+          echo "123-${{ env.file }}" > ${{ env.full }}
+          echo "123-${{ env.file }}" > ${{ env.file }}
+
+      - name: Create tag
+        uses: actions/github-script@v3
+        with:
+          script: |
+            github.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/v${{ env.version }}",
+              sha: context.sha
+            })
+
+      - name: Upload Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ env.version }}
+          files: |
+            ${{ env.file }}
+            ${{ env.full }}
+          make_latest: true
