@@ -38,3 +38,10 @@ jobs:
           echo "id: ${{ steps.gl-info.outputs.id }}"
           echo "tag: ${{ steps.gl-info.outputs.tag }}"
           echo "name: ${{ steps.gl-info.outputs.name }}"
+
+          echo "getter suka: ${{ steps.getter.outputs.suka }}"
+          echo "getter suka2: ${{ steps.getter.outputs.suka2 }}"
+          echo "gh-info suka: ${{ steps.gh-info.outputs.suka }}"
+          echo "gh-info suka2: ${{ steps.gh-info.outputs.suka2 }}"
+          echo "gl-info suka: ${{ steps.gl-info.outputs.suka }}"
+          echo "gl-info suka2: ${{ steps.gl-info.outputs.suka2 }}"
