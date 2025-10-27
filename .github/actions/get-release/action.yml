@@ -90,8 +90,11 @@ runs:
           auth_header="-H 'Authorization: Bearer $token'"
         fi
         echo "curl --compressed -sL --no-progress-bar -H 'Accept: application/vnd.github+json' $auth_header '$url'"
-        result=`curl --compressed -sL --no-progress-bar \
+        releases=`curl --compressed -sL --no-progress-bar \
           -H "Accept: application/vnd.github+json" $auth_header "$url"`
+        tag=`echo "$releases" | jq -c '.[] | select(.tag)' | jq .tag | grep -P 'v\d' | grep -oP '\d+\.\d+\.\d+' | sort -r| uniq|head -n 1`
+        result=`echo "$releases" | jq -c ".[] | select(.tag | contains(\"$tag\"))" | jq .id`
+
         for i in id name tag created_at; do
           echo -n "$i=" >> $GITHUB_OUTPUT
           echo "$result" | jq ".$i"' // ""' >> $GITHUB_OUTPUT

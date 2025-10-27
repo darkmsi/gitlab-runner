@@ -4,10 +4,11 @@ on:
     inputs:
       repo:
         description: Repository
+        default: gitlab-org/gitlab-runner
         required: false
       domain:
         description: Git service domain
-        default: github.com
+        default: gitlab.com
         required: false
       scheme:
         description: Git service scheme
