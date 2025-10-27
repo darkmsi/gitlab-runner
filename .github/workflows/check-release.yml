@@ -30,3 +30,11 @@ jobs:
           echo "id: ${{ steps.getter.outputs.id }}"
           echo "tag: ${{ steps.getter.outputs.tag }}"
           echo "name: ${{ steps.getter.outputs.name }}"
+
+          echo "id: ${{ steps.gh-info.outputs.id }}"
+          echo "tag: ${{ steps.gh-info.outputs.tag }}"
+          echo "name: ${{ steps.gh-info.outputs.name }}"
+
+          echo "id: ${{ steps.gl-info.outputs.id }}"
+          echo "tag: ${{ steps.gl-info.outputs.tag }}"
+          echo "name: ${{ steps.gl-info.outputs.name }}"
