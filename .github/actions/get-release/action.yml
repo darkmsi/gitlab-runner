@@ -28,6 +28,7 @@ runs:
 
     - name: Print result
       if: inputs.repo == github.repository
+      shell: bash
       run: |
         test -z "${{ steps.self.outputs.id }}" || echo "${{ inputs.saveto }}=${{ steps.self.outputs.id }}" >> $GITHUB_ENV
         echo "${{ inputs.saveto }}=${{ steps.self.outputs.id }}"
